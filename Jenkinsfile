@@ -39,5 +39,12 @@ pipeline {
                 bat 'npm run build'
             }
         }
+
+        stage('Archive Artifacts') {
+         steps {
+        archiveArtifacts artifacts: 'dist/**/*',
+                         fingerprint: true
+                }
+        }
     }
 }
