@@ -1,11 +1,24 @@
 pipeline {
     agent any
 
+
+    triggers {
+        pollSCM('H/2 * * * *')
+    }
+
+
     tools {
         nodejs 'NodeJS22'
     }
 
+
     stages {
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
 
         stage('Install Dependencies') {
             steps {
@@ -13,11 +26,13 @@ pipeline {
             }
         }
 
+
         stage('Run Tests') {
             steps {
                 bat 'npm test'
             }
         }
+
 
         stage('Build React') {
             steps {
